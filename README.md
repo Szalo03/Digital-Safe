@@ -1,5 +1,10 @@
 # Digital-Safe - Nexys A7-50T
 
+### Contributors
+> Hynek Svoboda
+> Dávid Szalay
+> Daniel Vana
+
 ## System Schematic
 ![Digital Safe Schematic](Schematic.png)
 
