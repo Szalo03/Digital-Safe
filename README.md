@@ -1,9 +1,12 @@
 # Digital-Safe - Nexys A7-50T
 
-### Contributors
+## Team members
 > [Hynek Svoboda](https://github.com/HynekSvoboda), 
 > [Dávid Szalay](https://github.com/Szalo03), 
 > [Daniel Vana](https://github.com)
+
+## Main goal
+Implement a 4-digit code entry system with visual feedback. Store entered codes in registers and compare to the preset combination to indicate success or failure.
 
 ## System Schematic
 ![Digital Safe Schematic](Schematic.png)
