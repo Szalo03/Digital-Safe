@@ -1,4 +1,4 @@
-## Digital-Safe
+# Digital-Safe - Nexys A7-50T
 
 ## System Schematic
 ![Digital Safe Schematic](Schematic.png)
