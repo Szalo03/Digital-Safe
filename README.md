@@ -3,10 +3,19 @@
 ## Team members
 > [Hynek Svoboda](https://github.com/HynekSvoboda), 
 > [Dávid Szalay](https://github.com/Szalo03), 
-> [Daniel Vana](https://github.com)
+> [Daniel Vana](https://github.com/DanVanex)
 
 ## Main goal
 Implement a 4-digit code entry system with visual feedback. Store entered codes in registers and compare to the preset combination to indicate success or failure.
+
+## 🚀 Functionality and Features
+
+* **Code Entry:** The system allows entering a 4-digit code. Each position holds a 4-bit value (0–15), which is set primarily using hardware switches.
+* **Slot Navigation:** The user can freely move between individual code positions (slots) using buttons and edit them in any order.
+* **Real-Time Display:** The currently assembled code is continuously shown on a seven-segment display, including an indication of the position currently being edited.
+* **Immediate Evaluation:** The hardware compares the entered code in memory with the secret password on every clock cycle. The status is indicated by colored LEDs.
+* **Debouncing:** All mechanical button inputs are debounced, ensuring accurate reading of button presses without unwanted multiple registrations.
+
 
 ## System Schematic
 ![Digital Safe Schematic](Schematic.png)
