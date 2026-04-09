@@ -18,7 +18,7 @@ Implement a 4-digit code entry system with visual feedback. Store entered codes 
 
 
 ## 🗺️ System Schematic
-![Digital Safe Schematic](Schematic.png)
+![Digital Safe Schematic](Image/Schematic.png)
 
 ## 📟 Hardware Interface
 
