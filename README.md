@@ -1,11 +1,11 @@
 # Digital-Safe - Nexys A7-50T
 
-## Team members
+## 👥 Team members 
 > [Hynek Svoboda](https://github.com/HynekSvoboda), 
 > [Dávid Szalay](https://github.com/Szalo03), 
 > [Daniel Vana](https://github.com/DanVanex)
 
-## Main goal
+## ⚽ Main goal
 Implement a 4-digit code entry system with visual feedback. Store entered codes in registers and compare to the preset combination to indicate success or failure.
 
 ## 🚀 Functionality and Features
@@ -17,10 +17,10 @@ Implement a 4-digit code entry system with visual feedback. Store entered codes 
 * **Debouncing:** All mechanical button inputs are debounced, ensuring accurate reading of button presses without unwanted multiple registrations.
 
 
-## System Schematic
+## 🗺️ System Schematic
 ![Digital Safe Schematic](Schematic.png)
 
-## Hardware Interface
+## 📟 Hardware Interface
 
 | Signal Name | Direction | Width | Physical Hardware | Description |
 |:--- |:---:|:---:|:--- |:--- |
