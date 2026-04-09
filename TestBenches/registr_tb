@@ -1,0 +1,60 @@
+library ieee;
+use ieee.std_logic_1164.all;
+
+entity tb_Registr is
+end tb_Registr;
+
+architecture test of tb_Registr is
+    signal s_clk       : std_logic := '0';
+    signal s_rst       : std_logic;
+    signal s_idx_pos   : std_logic_vector(1 downto 0) := "00";
+    signal s_sw_in     : std_logic_vector(3 downto 0) := "0000";
+    signal s_write_en  : std_logic := '0';
+    signal s_full_code : std_logic_vector(15 downto 0);
+
+    constant CLK_PERIOD : time := 10 ns;
+begin
+    uut: entity work.Registr
+        port map (
+            clk       => s_clk,
+            rst       => s_rst,
+            idx_pos   => s_idx_pos,
+            sw_in     => s_sw_in,
+            write_en  => s_write_en,
+            full_code => s_full_code
+        );
+
+    s_clk <= not s_clk after CLK_PERIOD/2;
+
+    stim_proc: process
+    begin
+        -- Reset the memory
+        s_rst <= '1';
+        wait for 20 ns;
+        s_rst <= '0';
+        wait for 20 ns;
+
+        s_idx_pos  <= "00"; 
+        s_sw_in    <= x"4"; 
+        wait for CLK_PERIOD;
+        s_write_en <= '1'; wait for CLK_PERIOD; s_write_en <= '0';
+        wait for 20 ns;
+
+        s_idx_pos  <= "01";
+        s_sw_in    <= x"3";
+        wait for CLK_PERIOD;
+        s_write_en <= '1'; wait for CLK_PERIOD; s_write_en <= '0';
+        wait for 20 ns;
+
+        s_idx_pos  <= "11";
+        s_sw_in    <= x"1";
+        wait for CLK_PERIOD;
+        s_write_en <= '1'; wait for CLK_PERIOD; s_write_en <= '0';
+        wait for 20 ns;
+
+        -- Final check: full_code should be x"1034" 
+        -- (Slot 2 was never written, so it stays '0')
+        
+        wait;
+    end process;
+end test;
