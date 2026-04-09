@@ -1,49 +1,21 @@
-----------------------------------------------------------------------------------
--- Company: 
--- Engineer: 
--- 
--- Create Date: 03/12/2026 04:58:49 PM
--- Design Name: 
--- Module Name: display_driver - Behavioral
--- Project Name: 
--- Target Devices: 
--- Tool Versions: 
--- Description: 
--- 
--- Dependencies: 
--- 
--- Revision:
--- Revision 0.01 - File Created
--- Additional Comments:
--- 
-----------------------------------------------------------------------------------
-
-
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 
--- Uncomment the following library declaration if using
--- arithmetic functions with Signed or Unsigned values
---use IEEE.NUMERIC_STD.ALL;
-
--- Uncomment the following library declaration if instantiating
--- any Xilinx leaf cells in this code.
---library UNISIM;
---use UNISIM.VComponents.all;
-
 entity display_driver is
-    Port ( clk : in STD_LOGIC;
-           rst : in STD_LOGIC;
-           data_in : in STD_LOGIC_VECTOR (15 downto 0);
-           seg : out STD_LOGIC_VECTOR (6 downto 0);
-           anode : out STD_LOGIC_VECTOR (3 downto 0);
-           idx_pos : in std_logic_vector (1 downto 0);
-           dp : out std_logic);
+    Port ( 
+        clk     : in  STD_LOGIC;
+        rst     : in  STD_LOGIC;
+        data_in : in  STD_LOGIC_VECTOR (15 downto 0);
+        seg     : out STD_LOGIC_VECTOR (6 downto 0);
+        anode   : out STD_LOGIC_VECTOR (3 downto 0);
+        idx_pos : in  STD_LOGIC_VECTOR (1 downto 0); -- From Counter
+        dp      : out STD_LOGIC                      -- Decimal Point
+    );
 end display_driver;
 
 architecture Behavioral of display_driver is
 
--- Component declaration for clock enable
+    -- Clock enable for refresh timing (approx 1kHz)
     component clk_en is
         generic ( G_MAX : positive );
         port (
@@ -52,8 +24,8 @@ architecture Behavioral of display_driver is
             ce  : out std_logic
         );
     end component clk_en;
-       
--- Component declaration for binary counter
+        
+    -- 2-bit counter to cycle through 4 displays
     component counter is
         generic ( G_BITS : positive );
         port (
@@ -64,36 +36,33 @@ architecture Behavioral of display_driver is
         );
     end component counter;
     
+    -- BCD to 7-Segment Decoder
     component Bin_2_Seg is
         Port ( 
-            bin : in STD_LOGIC_VECTOR (3 downto 0);
+            bin : in  STD_LOGIC_VECTOR (3 downto 0);
             seg : out STD_LOGIC_VECTOR (6 downto 0)
         );
     end component Bin_2_Seg;
     
--- Internal signals
-    signal sig_en       : std_logic;
-    signal sig_digit    : std_logic_vector(0 downto 0) := "0";
-    signal sig_bin      : std_logic_vector(3 downto 0);
-    -- TODO: Add other needed signals  
+    -- Internal signals
+    signal sig_en    : std_logic;
+    signal sig_digit : std_logic_vector(1 downto 0); -- Now 2 bits for 4 digits
+    signal sig_bin   : std_logic_vector(3 downto 0);
   
 begin
-    ------------------------------------------------------------------------
-    -- Clock enable generator for refresh timing
-    ------------------------------------------------------------------------
+
+    -- Refresh rate generator
     clock_0 : clk_en
-        generic map ( G_MAX => 1_000_000)  -- Adjust for flicker-free multiplexing
-        port map (                   -- For simulation: 32
-            clk => clk,              -- For implementation: 3_200_000
+        generic map ( G_MAX => 100_000) -- Adjust for ~1ms refresh on 100MHz clock
+        port map (
+            clk => clk,
             rst => rst,
             ce  => sig_en
         );
         
-   ------------------------------------------------------------------------
-    -- N-bit counter for digit selection
-   ------------------------------------------------------------------------
+    -- Digit selector counter (00 -> 01 -> 10 -> 11)
     counter_0 : counter
-        generic map ( G_BITS => 1 )
+        generic map ( G_BITS => 2 )
         port map (
             clk => clk,
             rst => rst,
@@ -102,33 +71,46 @@ begin
         );
 
     ------------------------------------------------------------------------
-    -- Digit select
+    -- 16-bit to 4-bit Multiplexer
     ------------------------------------------------------------------------
-    sig_bin <= data(3 downto 0) when sig_digit = "0" else
-               data(7 downto 4);
+    with sig_digit select
+        sig_bin <= data_in(3 downto 0)   when "00", -- Far Right
+                   data_in(7 downto 4)   when "01", -- Mid Right
+                   data_in(11 downto 8)  when "10", -- Mid Left
+                   data_in(15 downto 12) when others; -- Far Left
 
-        
-    -- Component instantiation of bin2seg
-    bin2seg0 :  Bin_2_Seg
+    -- Hex to 7-segment decoder
+    bin2seg0 : Bin_2_Seg
         port map (
-            bin => sig_bin,  -- Connects internal counter to decoder input
-            seg => seg       -- Connects decoder output to FPGA pins
+            bin => sig_bin,
+            seg => seg
         );
 
     ------------------------------------------------------------------------
-    -- Anode select process
+    -- Anode Selection & Decimal Point Cursor
     ------------------------------------------------------------------------
-    p_anode_select : process (sig_digit) is
+    p_display_control : process (sig_digit, idx_pos) is
     begin
+        -- Default: All displays off (Active High '1' = OFF for Nexys)
+        anode <= "1111";
+        dp    <= '1'; -- '1' is OFF on most Nexys boards
+        
+        -- Activate current anode based on refresh counter
         case sig_digit is
-            when "0" =>
-                anode <= "10";  -- Right digit active
-                
-            when "1" =>
-                anode <= "01";    
-
-            when others =>
-                anode <= "11";  -- All off
+            when "00" => anode <= "1110"; -- Rightmost
+            when "01" => anode <= "1101";
+            when "10" => anode <= "1011";
+            when "11" => anode <= "0111"; -- Leftmost
+            when others => anode <= "1111";
         end case;
-    end process;
+
+        -- Cursor Logic: If the refreshing digit is the one being edited, light the DP
+        if (sig_digit = idx_pos) then
+            dp <= '0'; -- '0' is ON
+        else
+            dp <= '1'; -- '1' is OFF
+        end if;
+        
+    end process p_display_control;
+
 end Behavioral;
