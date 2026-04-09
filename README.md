@@ -1,6 +1,7 @@
 ## Digital-Safe
 
-
+## System Schematic
+![Digital Safe Schematic](Schematic.png)
 
 ## Hardware Interface
 
