@@ -35,3 +35,12 @@ Implement a 4-digit code entry system with visual feedback. Store entered codes 
 | **dp** | Output | 1 | Decimal Point | Cursor indicating active digit |
 | **led_g** | Output | 1 | LED16 (Green) | Logic High when safe is OPEN |
 | **led_r** | Output | 1 | LED17 (Red) | Logic High when safe is LOCKED |
+
+## 🧪 Testbench & Simulation
+
+A testbench is a crucial simulation environment used to verify the functionality of the digital design before deploying it to the physical FPGA board. The testbench code is never uploaded to the hardware itself; instead, it acts as a virtual laboratory.
+
+**Key purposes of the testbench in this project:**
+* **Stimuli Generation:** It artificially generates all necessary input signals, such as the system clock (`clk`) and simulated user interactions (button presses and switch toggles).
+* **Logic Verification:** It runs predefined test scenarios to check if the circuit behaves as expected (e.g., verifying the lock states for correct and incorrect password entries).
+* **Deep Debugging:** It allows viewing detailed time waveforms of all internal signals, making it much easier to find and fix logic errors without needing the physical development board.
