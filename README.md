@@ -52,4 +52,14 @@ This specific testbench verifies the reliability of the button debouncing logic 
 * **Clean Presses:** Verifies that a normal, stable button press generates exactly one clean output pulse.
 * **Overlapping Inputs:** Ensures the logic correctly handles multiple buttons being pressed simultaneously without interference.
 * **Mechanical Bouncing:** Simulates rapid, unstable signal fluctuations (switch noise) to confirm the module effectively filters out the noise and prevents false, multiple triggers.
-* ![Debounce Test Bench](Image/debounce_tb.png)
+![Debounce Test Bench](Image/debounce_tb.png)
+
+## 🔢 Counter Testbench
+
+This testbench verifies the navigation logic used to track which digit of the password is currently being edited (slot index 0 to 3). Key test scenarios include:
+
+* **Initialization:** Verifies that a system reset correctly returns the active slot index to the first position (`0`).
+* **Incrementing (Move Left):** Tests the `en_inc` signal to ensure the counter correctly steps forward through the digit positions.
+* **Decrementing (Move Right):** Tests the `en_dec` signal to verify the counter correctly steps backward.
+* **Wrap-around Logic:** The underlying module design also ensures seamless cyclic navigation (e.g., stepping forward from the last position wraps around to the first).
+![Counter Test Bench](Image/counter_tb.png)
