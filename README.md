@@ -82,3 +82,13 @@ This testbench verifies the core security logic of the digital safe. It ensures 
 * **Successful Unlock:** Demonstrates that providing the exact matching code (`1234`) successfully switches the outputs, deactivating `lock_close` and activating `lock_open` (Green LED).
 * **Dynamic Relocking:** Confirms that modifying the code after a successful unlock immediately reverts the system back to a locked state.
 ![Comparator Test Bench](Image/comparator_tb.png)
+
+### 📺 Display Driver Testbench
+
+This testbench validates the display multiplexing and data decoding logic for the 4-digit seven-segment display. The simulation environment uses a scaled-down clock divider to rapidly visualize the anode switching process. Key test scenarios include:
+
+* **Multiplexing Verification:** Confirms that the `anode` signal continuously cycles through the active-low states (`1110`, `1101`, `1011`, `0111`) to drive one digit at a time.
+* **Data Decoding:** Ensures that the correct 4-bit nibble from the 16-bit `data_in` code is routed to the 7-segment decoder precisely when its corresponding anode is active.
+* **Edit Position Indicator:** Verifies the decimal point (`dp`) logic, proving that the dot illuminates (goes active-low) exclusively on the digit currently targeted by the `idx_pos` pointer, acting as a visual cursor for the user.
+* 
+![Display_driver Test Bench](Image/display_driver_tb.png)
