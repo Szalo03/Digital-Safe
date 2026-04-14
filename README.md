@@ -90,5 +90,4 @@ This testbench validates the display multiplexing and data decoding logic for th
 * **Multiplexing Verification:** Confirms that the `anode` signal continuously cycles through the active-low states (`1110`, `1101`, `1011`, `0111`) to drive one digit at a time.
 * **Data Decoding:** Ensures that the correct 4-bit nibble from the 16-bit `data_in` code is routed to the 7-segment decoder precisely when its corresponding anode is active.
 * **Edit Position Indicator:** Verifies the decimal point (`dp`) logic, proving that the dot illuminates (goes active-low) exclusively on the digit currently targeted by the `idx_pos` pointer, acting as a visual cursor for the user.
-* 
 ![Display_driver Test Bench](Image/display_driver_tb.png)
