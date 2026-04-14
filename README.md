@@ -52,4 +52,4 @@ This specific testbench verifies the reliability of the button debouncing logic 
 * **Clean Presses:** Verifies that a normal, stable button press generates exactly one clean output pulse.
 * **Overlapping Inputs:** Ensures the logic correctly handles multiple buttons being pressed simultaneously without interference.
 * **Mechanical Bouncing:** Simulates rapid, unstable signal fluctuations (switch noise) to confirm the module effectively filters out the noise and prevents false, multiple triggers.
-* ![Debounce Test Bench](TestBenches/debounce.png)
+* ![Debounce Test Bench](Image/debounce_tb.png)
