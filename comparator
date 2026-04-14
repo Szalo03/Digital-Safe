@@ -1,0 +1,42 @@
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+
+entity Comparator is
+    Port ( 
+        clk        : in  STD_LOGIC;
+        rst        : in  STD_LOGIC;
+        code_in    : in  STD_LOGIC_VECTOR (15 downto 0);
+        lock_open  : out STD_LOGIC; -- Green LED
+        lock_close : out STD_LOGIC  -- Red LED
+    );
+end Comparator;
+
+architecture Behavioral of Comparator is
+
+    -- Change this to whatever 4-digit PIN you want!
+    -- Each hex digit corresponds to a 4-bit switch value.
+    constant C_SECRET_PIN : std_logic_vector(15 downto 0) := x"1234";
+
+begin
+
+    p_compare : process (clk) is
+    begin
+        if rising_edge(clk) then
+            if rst = '1' then
+                -- Default state: Locked
+                lock_open  <= '0';
+                lock_close <= '1';
+            else
+                -- The Moment of Truth
+                if (code_in = C_SECRET_PIN) then
+                    lock_open  <= '1'; -- Green ON
+                    lock_close <= '0'; -- Red OFF
+                else
+                    lock_open  <= '0'; -- Green OFF
+                    lock_close <= '1'; -- Red ON
+                end if;
+            end if;
+        end if;
+    end process p_compare;
+
+end Behavioral;
