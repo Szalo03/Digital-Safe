@@ -44,3 +44,12 @@ A testbench is a crucial simulation environment used to verify the functionality
 * **Stimuli Generation:** It artificially generates all necessary input signals, such as the system clock (`clk`) and simulated user interactions (button presses and switch toggles).
 * **Logic Verification:** It runs predefined test scenarios to check if the circuit behaves as expected (e.g., verifying the lock states for correct and incorrect password entries).
 * **Deep Debugging:** It allows viewing detailed time waveforms of all internal signals, making it much easier to find and fix logic errors without needing the physical development board.
+
+## 🧪 Debounce Testbench
+
+This specific testbench verifies the reliability of the button debouncing logic by simulating real-world mechanical switch behavior. Key test scenarios include:
+
+* **Clean Presses:** Verifies that a normal, stable button press generates exactly one clean output pulse.
+* **Overlapping Inputs:** Ensures the logic correctly handles multiple buttons being pressed simultaneously without interference.
+* **Mechanical Bouncing:** Simulates rapid, unstable signal fluctuations (switch noise) to confirm the module effectively filters out the noise and prevents false, multiple triggers.
+* ![Debounce Test Bench](TestBenches/debounce.png)
