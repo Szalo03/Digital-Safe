@@ -45,7 +45,7 @@ A testbench is a crucial simulation environment used to verify the functionality
 * **Logic Verification:** It runs predefined test scenarios to check if the circuit behaves as expected (e.g., verifying the lock states for correct and incorrect password entries).
 * **Deep Debugging:** It allows viewing detailed time waveforms of all internal signals, making it much easier to find and fix logic errors without needing the physical development board.
 
-## 🧪 Debounce Testbench
+## ⚙️ Debounce Testbench
 
 This specific testbench verifies the reliability of the button debouncing logic by simulating real-world mechanical switch behavior. Key test scenarios include:
 
@@ -63,3 +63,12 @@ This testbench verifies the navigation logic used to track which digit of the pa
 * **Decrementing (Move Right):** Tests the `en_dec` signal to verify the counter correctly steps backward.
 * **Wrap-around Logic:** The underlying module design also ensures seamless cyclic navigation (e.g., stepping forward from the last position wraps around to the first).
 ![Counter Test Bench](Image/counter_tb.png)
+
+## 💾 Register Testbench
+
+This testbench verifies the 16-bit memory module responsible for storing the assembled 4-digit PIN code. It ensures that data is written exactly to the targeted digit slot without affecting the rest of the code. Key test scenarios include:
+
+* **Initialization:** Verifies that a system reset properly clears all internal storage slots (outputting `0000`).
+* **Targeted Memory Write:** Tests writing specific 4-bit values to different slots (e.g., slot 0, slot 1, slot 3) based on the `idx_pos` pointer.
+* **Data Retention:** Demonstrates that writing to one slot does not overwrite or corrupt data previously stored in other slots (e.g., skipping slot 2 keeps it at `0`, successfully forming the final hex code `1034`).
+![Counter Test Bench](Image/registr_tb.png)
