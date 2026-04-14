@@ -36,7 +36,7 @@ Implement a 4-digit code entry system with visual feedback. Store entered codes 
 | **led_g** | Output | 1 | LED16 (Green) | Logic High when safe is OPEN |
 | **led_r** | Output | 1 | LED17 (Red) | Logic High when safe is LOCKED |
 
-# 🧪 Testbench & Simulation
+## 🧪 Testbench & Simulation
 
 A testbench is a crucial simulation environment used to verify the functionality of the digital design before deploying it to the physical FPGA board. The testbench code is never uploaded to the hardware itself; instead, it acts as a virtual laboratory.
 
@@ -45,7 +45,7 @@ A testbench is a crucial simulation environment used to verify the functionality
 * **Logic Verification:** It runs predefined test scenarios to check if the circuit behaves as expected (e.g., verifying the lock states for correct and incorrect password entries).
 * **Deep Debugging:** It allows viewing detailed time waveforms of all internal signals, making it much easier to find and fix logic errors without needing the physical development board.
 
-## ⚙️ Debounce Testbench
+### ⚙️ Debounce Testbench
 
 This specific testbench verifies the reliability of the button debouncing logic by simulating real-world mechanical switch behavior. Key test scenarios include:
 
@@ -54,7 +54,7 @@ This specific testbench verifies the reliability of the button debouncing logic 
 * **Mechanical Bouncing:** Simulates rapid, unstable signal fluctuations (switch noise) to confirm the module effectively filters out the noise and prevents false, multiple triggers.
 ![Debounce Test Bench](Image/debounce_tb.png)
 
-## 🔢 Counter Testbench
+### 🔢 Counter Testbench
 
 This testbench verifies the navigation logic used to track which digit of the password is currently being edited (slot index 0 to 3). Key test scenarios include:
 
@@ -64,7 +64,7 @@ This testbench verifies the navigation logic used to track which digit of the pa
 * **Wrap-around Logic:** The underlying module design also ensures seamless cyclic navigation (e.g., stepping forward from the last position wraps around to the first).
 ![Counter Test Bench](Image/counter_tb.png)
 
-## 💾 Register Testbench
+### 💾 Register Testbench
 
 This testbench verifies the 16-bit memory module responsible for storing the assembled 4-digit PIN code. It ensures that data is written exactly to the targeted digit slot without affecting the rest of the code. Key test scenarios include:
 
@@ -73,7 +73,7 @@ This testbench verifies the 16-bit memory module responsible for storing the ass
 * **Data Retention:** Demonstrates that writing to one slot does not overwrite or corrupt data previously stored in other slots (e.g., skipping slot 2 keeps it at `0`, successfully forming the final hex code `1034`).
 ![Registr Test Bench](Image/registr_tb.png)
 
-## ⚖️ Comparator Testbench
+### ⚖️ Comparator Testbench
 
 This testbench verifies the core security logic of the digital safe. It ensures that the system continuously and accurately evaluates the user's inputted code against the hardcoded secret password (e.g., `1234`). Key test scenarios include:
 
