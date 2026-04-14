@@ -71,4 +71,14 @@ This testbench verifies the 16-bit memory module responsible for storing the ass
 * **Initialization:** Verifies that a system reset properly clears all internal storage slots (outputting `0000`).
 * **Targeted Memory Write:** Tests writing specific 4-bit values to different slots (e.g., slot 0, slot 1, slot 3) based on the `idx_pos` pointer.
 * **Data Retention:** Demonstrates that writing to one slot does not overwrite or corrupt data previously stored in other slots (e.g., skipping slot 2 keeps it at `0`, successfully forming the final hex code `1034`).
-![Counter Test Bench](Image/registr_tb.png)
+![Registr Test Bench](Image/registr_tb.png)
+
+## ⚖️ Comparator Testbench
+
+This testbench verifies the core security logic of the digital safe. It ensures that the system continuously and accurately evaluates the user's inputted code against the hardcoded secret password (e.g., `1234`). Key test scenarios include:
+
+* **Default Security State:** Verifies that upon system reset, the comparator defaults to the locked state (`lock_close` is active).
+* **Incorrect Code Rejection:** Tests completely wrong inputs (e.g., `9999`) and partially correct inputs (e.g., `1230`) to ensure the safe remains strictly locked.
+* **Successful Unlock:** Demonstrates that providing the exact matching code (`1234`) successfully switches the outputs, deactivating `lock_close` and activating `lock_open` (Green LED).
+* **Dynamic Relocking:** Confirms that modifying the code after a successful unlock immediately reverts the system back to a locked state.
+![Comparator Test Bench](Image/comparator_tb.png)
