@@ -1,0 +1,50 @@
+library ieee;
+use ieee.std_logic_1164.all;
+
+entity tb_display_driver is
+end tb_display_driver;
+
+architecture test of tb_display_driver is
+    signal s_clk     : std_logic := '0';
+    signal s_rst     : std_logic;
+    signal s_data_in : std_logic_vector(15 downto 0) := (others => '0');
+    signal s_idx_pos : std_logic_vector(1 downto 0)  := "00";
+    signal s_seg     : std_logic_vector(6 downto 0);
+    signal s_anode   : std_logic_vector(3 downto 0);
+    signal s_dp      : std_logic;
+
+    constant CLK_PERIOD : time := 10 ns;
+
+begin
+    uut: entity work.display_driver
+        port map (
+            clk     => s_clk,
+            rst     => s_rst,
+            data_in => s_data_in,
+            seg     => s_seg,
+            anode   => s_anode,
+            idx_pos => s_idx_pos,
+            dp      => s_dp
+        );
+
+    s_clk <= not s_clk after CLK_PERIOD / 2;
+
+    stim_proc: process
+    begin
+        s_rst <= '1';
+        wait for 100 ns;
+        s_rst <= '0';
+        wait for 100 ns;
+
+        s_data_in <= x"1234";
+        s_idx_pos <= "01";
+
+	    wait for 1 us;        
+        s_data_in <= x"A55A";
+        s_idx_pos <= "11";
+        
+        wait for 1 us;
+
+        wait; -- Konec simulace
+    end process;
+end test;
