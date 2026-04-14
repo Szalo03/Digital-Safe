@@ -27,19 +27,20 @@ architecture Behavioral of display_driver is
     component counter is
         generic ( G_BITS : positive );
         port (
-            clk : in  std_logic;
-            rst : in  std_logic;
-            en  : in  std_logic;
-            cnt : out std_logic_vector(G_BITS - 1 downto 0)
+            clk      : in  std_logic;
+            rst      : in  std_logic;
+            en_dec   : in  std_logic;
+            en_inc   : in  std_logic;
+            slot_idx : out std_logic_vector(G_BITS - 1 downto 0)
         );
     end component counter;
     
-    component Bin_2_Seg is
+    component bin2seg is
         Port ( 
             bin : in  STD_LOGIC_VECTOR (3 downto 0);
             seg : out STD_LOGIC_VECTOR (6 downto 0)
         );
-    end component Bin_2_Seg;
+    end component bin2seg;
     
     -- Internal signals
     signal sig_en    : std_logic;
@@ -48,8 +49,8 @@ architecture Behavioral of display_driver is
   
 begin
 
-    clock_0 : clk_en
-        generic map ( G_MAX => 100_000) 
+        clock_0 : clk_en
+        generic map ( G_MAX => 10 )  -- ZMĚNĚNO ZE 100_000 NA 10 PRO SIMULACI
         port map (
             clk => clk,
             rst => rst,
@@ -59,10 +60,11 @@ begin
     counter_0 : counter
         generic map ( G_BITS => 2 )
         port map (
-            clk => clk,
-            rst => rst,
-            en  => sig_en,
-            cnt => sig_digit
+            clk      => clk,
+            rst      => rst,
+            en_dec   => '0',      -- V displeji nepočítáme pozpátku, uzemníme
+            en_inc   => sig_en,   -- Signál z děličky zapojíme na krok vpřed
+            slot_idx => sig_digit -- Výstup pro výběr číslice
         );
 
     with sig_digit select
@@ -71,7 +73,7 @@ begin
                    data_in(11 downto 8)  when "10", 
                    data_in(15 downto 12) when others; 
 
-    bin2seg0 : Bin_2_Seg
+   bin2seg0 : bin2seg
         port map (
             bin => sig_bin,
             seg => seg
