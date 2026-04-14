@@ -36,7 +36,7 @@ Implement a 4-digit code entry system with visual feedback. Store entered codes 
 | **led_g** | Output | 1 | LED16 (Green) | Logic High when safe is OPEN |
 | **led_r** | Output | 1 | LED17 (Red) | Logic High when safe is LOCKED |
 
-## 🧪 Testbench & Simulation
+# 🧪 Testbench & Simulation
 
 A testbench is a crucial simulation environment used to verify the functionality of the digital design before deploying it to the physical FPGA board. The testbench code is never uploaded to the hardware itself; instead, it acts as a virtual laboratory.
 
