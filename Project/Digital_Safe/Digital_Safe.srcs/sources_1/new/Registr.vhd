@@ -1,0 +1,47 @@
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+
+entity Registr is
+    Port ( 
+        clk       : in  STD_LOGIC;
+        rst       : in  STD_LOGIC;
+        idx_pos   : in  STD_LOGIC_VECTOR (1 downto 0);
+        sw_in     : in  STD_LOGIC_VECTOR (3 downto 0); 
+        write_en  : in  STD_LOGIC;                
+        full_code : out STD_LOGIC_VECTOR (15 downto 0)
+    );
+end Registr;
+
+architecture Behavioral of Registr is
+
+    signal sig_reg0 : std_logic_vector(3 downto 0);
+    signal sig_reg1 : std_logic_vector(3 downto 0);
+    signal sig_reg2 : std_logic_vector(3 downto 0);
+    signal sig_reg3 : std_logic_vector(3 downto 0);
+
+begin
+
+    p_register_write : process (clk) is
+    begin
+        if rising_edge(clk) then
+            if rst = '1' then
+                sig_reg0 <= (others => '0');
+                sig_reg1 <= (others => '0');
+                sig_reg2 <= (others => '0');
+                sig_reg3 <= (others => '0');
+                
+            elsif write_en = '1' then
+                case idx_pos is
+                    when "00" => sig_reg0 <= sw_in;
+                    when "01" => sig_reg1 <= sw_in;
+                    when "10" => sig_reg2 <= sw_in;
+                    when "11" => sig_reg3 <= sw_in;
+                    when others => null;
+                end case;
+            end if;
+        end if;
+    end process p_register_write;
+
+    full_code <= sig_reg3 & sig_reg2 & sig_reg1 & sig_reg0;
+
+end Behavioral;
