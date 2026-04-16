@@ -19,7 +19,6 @@ architecture Behavioral of debounce is
     constant C_SHIFT_LEN : positive := 4;
     constant C_MAX       : positive := 200_000;
 
-    -- Component for clock enable
     component clk_en is
         generic ( G_MAX : positive );
         port (
@@ -29,13 +28,11 @@ architecture Behavioral of debounce is
         );
     end component clk_en;
 
-    -- Internal signals
     signal ce_sample : std_logic;
     signal btn_vec   : std_logic_vector(2 downto 0);
     signal sync0     : std_logic_vector(2 downto 0);
     signal sync1     : std_logic_vector(2 downto 0);
     
-    -- Array for shift registers
     type t_shift_reg is array (2 downto 0) of std_logic_vector(C_SHIFT_LEN-1 downto 0);
     signal shift_regs : t_shift_reg;
     
@@ -44,10 +41,8 @@ architecture Behavioral of debounce is
 
 begin
 
-    -- Group inputs into a vector for easier processing
     btn_vec <= btnl_in & btnr_in & btnd_in;
 
-    -- Sampling period generator
     clock_0 : clk_en
         generic map ( G_MAX => C_MAX )
         port map (
@@ -56,9 +51,6 @@ begin
             ce  => ce_sample
         );
 
-    ----------------------------------------------------------------
-    -- Synchronizer + Debounce Process
-    ----------------------------------------------------------------
     p_debounce : process(clk)
     begin
         if rising_edge(clk) then
@@ -71,36 +63,26 @@ begin
                     shift_regs(i) <= (others => '0');
                 end loop;
             else
-                -- Input synchronizers (prevent metastability)
                 sync0 <= btn_vec;
                 sync1 <= sync0;
 
-                -- Edge detection and Debounce logic
                 if ce_sample = '1' then
                     for i in 0 to 2 loop
-                        -- Shift in the synchronized input
                         shift_regs(i) <= shift_regs(i)(C_SHIFT_LEN-2 downto 0) & sync1(i);
 
-                        -- Set debounced high if all bits are 1
                         if shift_regs(i) = (shift_regs(i)'range => '1') then
                             debounced(i) <= '1';
-                        -- Set debounced low if all bits are 0
                         elsif shift_regs(i) = (shift_regs(i)'range => '0') then
                             debounced(i) <= '0';
                         end if;
                     end loop;
                 end if;
 
-                -- Create a one-clock delay to detect the rising edge
                 delayed <= debounced;
             end if;
         end if;
     end process;
 
-    ----------------------------------------------------------------
-    -- Outputs: Pulse generation (Rising Edge Detector)
-    ----------------------------------------------------------------
-    -- Only '1' for exactly one clock cycle when button is first pushed
     btnl_pressed <= debounced(2) and not(delayed(2));
     btnr_pressed <= debounced(1) and not(delayed(1));
     btnd_pressed <= debounced(0) and not(delayed(0));
