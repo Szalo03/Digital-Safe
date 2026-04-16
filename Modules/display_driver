@@ -9,7 +9,7 @@ entity display_driver is
         seg     : out STD_LOGIC_VECTOR (6 downto 0);
         anode   : out STD_LOGIC_VECTOR (3 downto 0);
         idx_pos : in  STD_LOGIC_VECTOR (1 downto 0); 
-        dp      : out STD_LOGIC                     
+        dp      : out STD_LOGIC                      
     );
 end display_driver;
 
@@ -42,15 +42,14 @@ architecture Behavioral of display_driver is
         );
     end component Bin_2_Seg;
     
-    -- Internal signals
     signal sig_en    : std_logic;
     signal sig_digit : std_logic_vector(1 downto 0); 
     signal sig_bin   : std_logic_vector(3 downto 0);
   
 begin
 
-        clock_0 : clk_en
-        generic map ( G_MAX => 10 )  -- ZMĚNĚNO ZE 100_000 NA 10 PRO SIMULACI
+    clock_0 : clk_en
+        generic map ( G_MAX => 100_000 ) 
         port map (
             clk => clk,
             rst => rst,
@@ -62,9 +61,9 @@ begin
         port map (
             clk      => clk,
             rst      => rst,
-            en_dec   => '0',      -- V displeji nepočítáme pozpátku, uzemníme
-            en_inc   => sig_en,   -- Signál z děličky zapojíme na krok vpřed
-            slot_idx => sig_digit -- Výstup pro výběr číslice
+            en_dec   => '0',
+            en_inc   => sig_en,
+            slot_idx => sig_digit
         );
 
     with sig_digit select
@@ -73,34 +72,35 @@ begin
                    data_in(11 downto 8)  when "10", 
                    data_in(15 downto 12) when others; 
 
-   bin2seg0 : Bin_2_Seg
+    bin2seg0 : Bin_2_Seg
         port map (
             bin => sig_bin,
             seg => seg
         );
 
-    p_display_control : process (sig_digit, idx_pos) is
+    p_display_control : process (clk) is
     begin
-        
-        anode <= "1111";
-        dp    <= '1'; 
-        
-        
-        case sig_digit is
-            when "00" => anode <= "1110"; 
-            when "01" => anode <= "1101";
-            when "10" => anode <= "1011";
-            when "11" => anode <= "0111"; 
-            when others => anode <= "1111";
-        end case;
+        if rising_edge(clk) then
+            if rst = '1' then
+                anode <= "1111";
+                dp    <= '1';
+            else
+                -- 1. Anode Selection
+                case sig_digit is
+                    when "00" => anode <= "1110"; 
+                    when "01" => anode <= "1101";
+                    when "10" => anode <= "1011";
+                    when "11" => anode <= "0111"; 
+                    when others => anode <= "1111";
+                end case;
 
-        
-        if (sig_digit = idx_pos) then
-            dp <= '0'; -- '0' is ON
-        else
-            dp <= '1';
+                if (sig_digit = idx_pos) then
+                    dp <= '0'; -- ON
+                else
+                    dp <= '1'; -- OFF
+                end if;
+            end if;
         end if;
-        
     end process p_display_control;
 
 end Behavioral;
