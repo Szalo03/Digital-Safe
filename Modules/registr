@@ -5,38 +5,32 @@ entity Registr is
     Port ( 
         clk       : in  STD_LOGIC;
         rst       : in  STD_LOGIC;
-        idx_pos   : in  STD_LOGIC_VECTOR (1 downto 0); -- Which digit are we editing?
-        sw_in     : in  STD_LOGIC_VECTOR (3 downto 0); -- The value from switches
-        write_en  : in  STD_LOGIC;                      -- The "Save" pulse from BTND
-        full_code : out STD_LOGIC_VECTOR (15 downto 0)  -- The whole PIN
+        idx_pos   : in  STD_LOGIC_VECTOR (1 downto 0);
+        sw_in     : in  STD_LOGIC_VECTOR (3 downto 0); 
+        write_en  : in  STD_LOGIC;                
+        full_code : out STD_LOGIC_VECTOR (15 downto 0)
     );
 end Registr;
 
 architecture Behavioral of Registr is
 
-    -- Internal storage for the four digits
-    signal sig_reg0 : std_logic_vector(3 downto 0); -- Rightmost
+    signal sig_reg0 : std_logic_vector(3 downto 0);
     signal sig_reg1 : std_logic_vector(3 downto 0);
     signal sig_reg2 : std_logic_vector(3 downto 0);
-    signal sig_reg3 : std_logic_vector(3 downto 0); -- Leftmost
+    signal sig_reg3 : std_logic_vector(3 downto 0);
 
 begin
 
-    --------------------------------------------------------------------
-    -- Sequential process for writing data
-    --------------------------------------------------------------------
     p_register_write : process (clk) is
     begin
         if rising_edge(clk) then
             if rst = '1' then
-                -- Clear all digits on reset
                 sig_reg0 <= (others => '0');
                 sig_reg1 <= (others => '0');
                 sig_reg2 <= (others => '0');
                 sig_reg3 <= (others => '0');
                 
             elsif write_en = '1' then
-                -- Only update the digit pointed to by idx_pos
                 case idx_pos is
                     when "00" => sig_reg0 <= sw_in;
                     when "01" => sig_reg1 <= sw_in;
@@ -48,9 +42,6 @@ begin
         end if;
     end process p_register_write;
 
-    --------------------------------------------------------------------
-    -- Combine internal registers into the full 16-bit code output
-    --------------------------------------------------------------------
     full_code <= sig_reg3 & sig_reg2 & sig_reg1 & sig_reg0;
 
 end Behavioral;
