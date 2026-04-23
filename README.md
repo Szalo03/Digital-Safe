@@ -91,3 +91,11 @@ This testbench validates the display multiplexing and data decoding logic for th
 * **Data Decoding:** Ensures that the correct 4-bit nibble from the 16-bit `data_in` code is routed to the 7-segment decoder precisely when its corresponding anode is active.
 * **Edit Position Indicator:** Verifies the decimal point (`dp`) logic, proving that the dot illuminates (goes active-low) exclusively on the digit currently targeted by the `idx_pos` pointer, acting as a visual cursor for the user.
 ![Display_driver Test Bench](Images/Simulation/display_driver_tb.png)
+
+### Implementation Resource Utilization
+| Resource | Utilization | Available | Utilization % |
+| :--- | :--- | :--- | :--- |
+| 🧱 LUT (Look-Up Table) | 49 | 32,600 | 0.15% |
+| 🔄 FF (Flip-Flop) | 100 | 65,200 | 0.15% |
+| 🔌 IO (Input/Output Pins) | 27 | 210 | 12.86% |
+| ⚡ BUFG (Global Clock Buffer) | 1 | 32 | 3.13% |
