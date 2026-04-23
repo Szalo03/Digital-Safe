@@ -45,7 +45,7 @@ A testbench is a crucial simulation environment used to verify the functionality
 * **Logic Verification:** It runs predefined test scenarios to check if the circuit behaves as expected (e.g., verifying the lock states for correct and incorrect password entries).
 * **Deep Debugging:** It allows viewing detailed time waveforms of all internal signals, making it much easier to find and fix logic errors without needing the physical development board.
 
-### ⚙️[Debounce](<Project/Digital_Safe/Digital_Safe.srcs/sources_1/imports/DE1/Project/Digital Safe/Digital Safe.srcs/sources_1/imports/new/debounce.vhd>) Testbench 
+### ⚙️[Debounce](<Project/Digital_Safe/Digital_Safe.srcs/sources_1/imports/DE1/Project/Digital Safe/Digital Safe.srcs/sources_1/imports/new/debounce.vhd>) [Testbench](<TestBenches/debounce_tb>) 
 
 This specific testbench verifies the reliability of the button debouncing logic by simulating real-world mechanical switch behavior. Key test scenarios include:
 
@@ -54,7 +54,7 @@ This specific testbench verifies the reliability of the button debouncing logic 
 * **Mechanical Bouncing:** Simulates rapid, unstable signal fluctuations (switch noise) to confirm the module effectively filters out the noise and prevents false, multiple triggers.
 ![Debounce Test Bench](Image/Simulation/debounce_tb.png)
 
-### 🔢 [Counter](<Project/Digital_Safe/Digital_Safe.srcs/sources_1/imports/DE1/Lab_4/Binary_Counter/Binary_Counter.srcs/sources_1/new/counter.vhd>) Testbench 
+### 🔢 [Counter](<Project/Digital_Safe/Digital_Safe.srcs/sources_1/imports/DE1/Lab_4/Binary_Counter/Binary_Counter.srcs/sources_1/new/counter.vhd>) [Testbench](<TestBenches/counter_tb>) 
 
 This testbench verifies the navigation logic used to track which digit of the password is currently being edited (slot index 0 to 3). Key test scenarios include:
 
@@ -64,7 +64,7 @@ This testbench verifies the navigation logic used to track which digit of the pa
 * **Wrap-around Logic:** The underlying module design also ensures seamless cyclic navigation (e.g., stepping forward from the last position wraps around to the first).
 ![Counter Test Bench](Image/Simulation/counter_tb.png)
 
-### 💾 [Register](<Project/Digital_Safe/Digital_Safe.srcs/sources_1/new/Registr.vhd>) Testbench 
+### 💾 [Register](<Project/Digital_Safe/Digital_Safe.srcs/sources_1/new/Registr.vhd>) [Testbench](<TestBenches/registr_tb>) 
 
 This testbench verifies the 16-bit memory module responsible for storing the assembled 4-digit PIN code. It ensures that data is written exactly to the targeted digit slot without affecting the rest of the code. Key test scenarios include:
 
@@ -73,7 +73,7 @@ This testbench verifies the 16-bit memory module responsible for storing the ass
 * **Data Retention:** Demonstrates that writing to one slot does not overwrite or corrupt data previously stored in other slots (e.g., skipping slot 2 keeps it at `0`, successfully forming the final hex code `1034`).
 ![Registr Test Bench](Image/Simulation/registr_tb.png)
 
-### ⚖️ [Comparator](<Project/Digital_Safe/Digital_Safe.srcs/sources_1/new/Comparator.vhd>) Testbench 
+### ⚖️ [Comparator](<Project/Digital_Safe/Digital_Safe.srcs/sources_1/new/Comparator.vhd>) [Testbench](<TestBenches/comparator_tb>)  
 
 This testbench verifies the core security logic of the digital safe. It ensures that the system continuously and accurately evaluates the user's inputted code against the hardcoded secret password (e.g., `1234`). Key test scenarios include:
 
@@ -83,7 +83,7 @@ This testbench verifies the core security logic of the digital safe. It ensures 
 * **Dynamic Relocking:** Confirms that modifying the code after a successful unlock immediately reverts the system back to a locked state.
 ![Comparator Test Bench](Image/Simulation/comparator_tb.png)
 
-### 📺 [Display Driver](<Project/Digital_Safe/Digital_Safe.srcs/sources_1/imports/DE1/Project/Digital Safe/Digital Safe.srcs/sources_1/imports/DE1/Lab_5/display/display.srcs/sources_1/new/display_driver.vhd>) Testbench 
+### 📺 [Display Driver](<Project/Digital_Safe/Digital_Safe.srcs/sources_1/imports/DE1/Project/Digital Safe/Digital Safe.srcs/sources_1/imports/DE1/Lab_5/display/display.srcs/sources_1/new/display_driver.vhd>) [Testbench](<TestBenches/display_driver_tb>)  
 
 This testbench validates the display multiplexing and data decoding logic for the 4-digit seven-segment display. The simulation environment uses a scaled-down clock divider to rapidly visualize the anode switching process. Key test scenarios include:
 
