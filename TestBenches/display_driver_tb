@@ -8,6 +8,7 @@ architecture test of tb_display_driver is
     signal s_clk     : std_logic := '0';
     signal s_rst     : std_logic;
     signal s_data_in : std_logic_vector(15 downto 0) := (others => '0');
+    signal s_sw_in   : std_logic_vector(3 downto 0)  := (others => '0');
     signal s_idx_pos : std_logic_vector(1 downto 0)  := "00";
     signal s_seg     : std_logic_vector(6 downto 0);
     signal s_anode   : std_logic_vector(3 downto 0);
@@ -18,13 +19,14 @@ architecture test of tb_display_driver is
 begin
     uut: entity work.display_driver
         port map (
-            clk     => s_clk,
-            rst     => s_rst,
-            data_in => s_data_in,
-            seg     => s_seg,
-            anode   => s_anode,
-            idx_pos => s_idx_pos,
-            dp      => s_dp
+            clk      => s_clk,
+            rst      => s_rst,
+            data_in  => s_data_in,
+            sw_in    => s_sw_in,
+            seg      => s_seg,
+            anode    => s_anode,
+            idx_pos  => s_idx_pos,
+            dp       => s_dp
         );
 
     s_clk <= not s_clk after CLK_PERIOD / 2;
@@ -38,13 +40,18 @@ begin
 
         s_data_in <= x"1234";
         s_idx_pos <= "01";
+        s_sw_in   <= x"F"; 
+        wait for 1 us;        
 
-	    wait for 1 us;        
+        s_sw_in   <= x"A";
+        wait for 1 us;
+
         s_data_in <= x"A55A";
         s_idx_pos <= "11";
+        s_sw_in   <= x"3";
         
         wait for 1 us;
 
-        wait; -- Konec simulace
+        wait; 
     end process;
 end test;
