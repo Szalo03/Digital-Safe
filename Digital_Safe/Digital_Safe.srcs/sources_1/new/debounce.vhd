@@ -1,0 +1,91 @@
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+
+entity debounce is
+    Port ( 
+        clk          : in  STD_LOGIC;
+        rst          : in  STD_LOGIC;
+        btnl_in      : in  STD_LOGIC;
+        btnr_in      : in  STD_LOGIC;
+        btnd_in      : in  STD_LOGIC;
+        btnl_pressed : out STD_LOGIC;
+        btnr_pressed : out STD_LOGIC;
+        btnd_pressed : out STD_LOGIC
+    );
+end debounce;
+
+architecture Behavioral of debounce is
+
+    constant C_SHIFT_LEN : positive := 8;
+    constant C_MAX       : positive := 250_000;
+
+    component clk_en is
+        generic ( G_MAX : positive );
+        port (
+            clk : in  std_logic;
+            rst : in  std_logic;
+            ce  : out std_logic
+        );
+    end component clk_en;
+
+    signal ce_sample : std_logic;
+    signal btn_vec   : std_logic_vector(2 downto 0);
+    signal sync0     : std_logic_vector(2 downto 0);
+    signal sync1     : std_logic_vector(2 downto 0);
+    
+    type t_shift_reg is array (2 downto 0) of std_logic_vector(C_SHIFT_LEN-1 downto 0);
+    signal shift_regs : t_shift_reg;
+    
+    signal debounced : std_logic_vector(2 downto 0);
+    signal delayed   : std_logic_vector(2 downto 0);
+
+begin
+
+    btn_vec <= btnl_in & btnr_in & btnd_in;
+
+    clock_0 : clk_en
+        generic map ( G_MAX => C_MAX )
+        port map (
+            clk => clk,
+            rst => rst,
+            ce  => ce_sample
+        );
+
+    p_debounce : process(clk)
+    begin
+        if rising_edge(clk) then
+            if rst = '1' then
+                sync0      <= (others => '0');
+                sync1      <= (others => '0');
+                debounced  <= (others => '0');
+                delayed    <= (others => '0');
+                for i in 0 to 2 loop
+                    shift_regs(i) <= (others => '0');
+                end loop;
+            else
+                sync0 <= btn_vec;
+                sync1 <= sync0;
+
+                if ce_sample = '1' then
+                    for i in 0 to 2 loop
+                        shift_regs(i) <= shift_regs(i)(C_SHIFT_LEN-2 downto 0) & sync1(i);
+
+                        if shift_regs(i) = (shift_regs(i)'range => '1') then
+                            debounced(i) <= '1';
+                        elsif shift_regs(i) = (shift_regs(i)'range => '0') then
+                            debounced(i) <= '0';
+                        end if;
+                    end loop;
+                end if;
+
+
+                delayed <= debounced;
+            end if;
+        end if;
+    end process;
+
+    btnl_pressed <= debounced(2) and not(delayed(2));
+    btnr_pressed <= debounced(1) and not(delayed(1));
+    btnd_pressed <= debounced(0) and not(delayed(0));
+
+end Behavioral;
