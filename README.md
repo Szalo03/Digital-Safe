@@ -18,7 +18,7 @@ Implement a 4-digit code entry system with visual feedback. Store entered codes 
 
 
 ## 🗺️ System Schematic
-![Digital Safe Schematic](Image/Schematic.png)
+![Digital Safe Schematic](Images/Schematic.png)
 
 ## 📟 Hardware Interface
 
@@ -36,7 +36,7 @@ Implement a 4-digit code entry system with visual feedback. Store entered codes 
 | **led_17g** | Output | 1 | LED16 (Green) | Logic High when safe is OPEN |
 | **led_16r** | Output | 1 | LED17 (Red) | Logic High when safe is LOCKED |
 
-## 🧪 [Testbench](<TestBenches>) & [Simulation](<Image/Simulation>)
+## 🧪 [Testbench](<TestBenches>) & [Simulation](<Images/Simulation>)
 
 A testbench is a crucial simulation environment used to verify the functionality of the digital design before deploying it to the physical FPGA board. The testbench code is never uploaded to the hardware itself; instead, it acts as a virtual laboratory.
 
@@ -52,7 +52,7 @@ This specific testbench verifies the reliability of the button debouncing logic 
 * **Clean Presses:** Verifies that a normal, stable button press generates exactly one clean output pulse.
 * **Overlapping Inputs:** Ensures the logic correctly handles multiple buttons being pressed simultaneously without interference.
 * **Mechanical Bouncing:** Simulates rapid, unstable signal fluctuations (switch noise) to confirm the module effectively filters out the noise and prevents false, multiple triggers.
-![Debounce Test Bench](Image/Simulation/debounce_tb.png)
+![Debounce Test Bench](Images/Simulation/debounce_tb.png)
 
 ### 🔢 [Counter](<Project/Digital_Safe/Digital_Safe.srcs/sources_1/imports/DE1/Lab_4/Binary_Counter/Binary_Counter.srcs/sources_1/new/counter.vhd>) [Testbench](<TestBenches/counter_tb>) 
 
@@ -62,7 +62,7 @@ This testbench verifies the navigation logic used to track which digit of the pa
 * **Incrementing (Move Left):** Tests the `en_inc` signal to ensure the counter correctly steps forward through the digit positions.
 * **Decrementing (Move Right):** Tests the `en_dec` signal to verify the counter correctly steps backward.
 * **Wrap-around Logic:** The underlying module design also ensures seamless cyclic navigation (e.g., stepping forward from the last position wraps around to the first).
-![Counter Test Bench](Image/Simulation/counter_tb.png)
+![Counter Test Bench](Images/Simulation/counter_tb.png)
 
 ### 💾 [Register](<Project/Digital_Safe/Digital_Safe.srcs/sources_1/new/Registr.vhd>) [Testbench](<TestBenches/registr_tb>) 
 
@@ -71,7 +71,7 @@ This testbench verifies the 16-bit memory module responsible for storing the ass
 * **Initialization:** Verifies that a system reset properly clears all internal storage slots (outputting `0000`).
 * **Targeted Memory Write:** Tests writing specific 4-bit values to different slots (e.g., slot 0, slot 1, slot 3) based on the `idx_pos` pointer.
 * **Data Retention:** Demonstrates that writing to one slot does not overwrite or corrupt data previously stored in other slots (e.g., skipping slot 2 keeps it at `0`, successfully forming the final hex code `1034`).
-![Registr Test Bench](Image/Simulation/registr_tb.png)
+![Registr Test Bench](Images/Simulation/registr_tb.png)
 
 ### ⚖️ [Comparator](<Project/Digital_Safe/Digital_Safe.srcs/sources_1/new/Comparator.vhd>) [Testbench](<TestBenches/comparator_tb>)  
 
@@ -81,7 +81,7 @@ This testbench verifies the core security logic of the digital safe. It ensures 
 * **Incorrect Code Rejection:** Tests completely wrong inputs (e.g., `9999`) and partially correct inputs (e.g., `1230`) to ensure the safe remains strictly locked.
 * **Successful Unlock:** Demonstrates that providing the exact matching code (`1234`) successfully switches the outputs, deactivating `lock_close` and activating `lock_open` (Green LED).
 * **Dynamic Relocking:** Confirms that modifying the code after a successful unlock immediately reverts the system back to a locked state.
-![Comparator Test Bench](Image/Simulation/comparator_tb.png)
+![Comparator Test Bench](Images/Simulation/comparator_tb.png)
 
 ### 📺 [Display Driver](<Project/Digital_Safe/Digital_Safe.srcs/sources_1/imports/DE1/Project/Digital Safe/Digital Safe.srcs/sources_1/imports/DE1/Lab_5/display/display.srcs/sources_1/new/display_driver.vhd>) [Testbench](<TestBenches/display_driver_tb>)  
 
@@ -90,4 +90,4 @@ This testbench validates the display multiplexing and data decoding logic for th
 * **Multiplexing Verification:** Confirms that the `anode` signal continuously cycles through the active-low states (`1110`, `1101`, `1011`, `0111`) to drive one digit at a time.
 * **Data Decoding:** Ensures that the correct 4-bit nibble from the 16-bit `data_in` code is routed to the 7-segment decoder precisely when its corresponding anode is active.
 * **Edit Position Indicator:** Verifies the decimal point (`dp`) logic, proving that the dot illuminates (goes active-low) exclusively on the digit currently targeted by the `idx_pos` pointer, acting as a visual cursor for the user.
-![Display_driver Test Bench](Image/Simulation/display_driver_tb.png)
+![Display_driver Test Bench](Images/Simulation/display_driver_tb.png)
