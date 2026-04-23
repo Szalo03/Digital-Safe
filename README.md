@@ -107,6 +107,6 @@ This testbench validates the display multiplexing and data decoding logic for th
 - **Git:** Version control and documentation.
 
 ### References
-- **[IEEE Standard 1076-2008](<VHDL Language Reference Manual  https://0x04.net/~mwk/vstd/ieee-1076-2008.pdf>)** 
+- **[IEEE Standard 1076-2008 - VHDL Language Reference Manual](<https://0x04.net/~mwk/vstd/ieee-1076-2008.pdf>)** 
 - **[Nexys A7 Digilent Reference](<https://digilent.com/reference/programmable-logic/nexys-a7/start>)** 
 - **[Online VHDL Testbench Template Generator](<https://vhdl.lapinoo.net>)**
