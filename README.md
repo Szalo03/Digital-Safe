@@ -99,3 +99,14 @@ This testbench validates the display multiplexing and data decoding logic for th
 | 🔄 FF (Flip-Flop) | 100 | 65200 | 0.15 |
 | 🔌 IO (Input/Output Pins) | 27 | 210 | 12.86 |
 | ⚡ BUFG (Global Clock Buffer) | 1 | 32 | 3.13 |
+
+## 📖 References & Tools
+### Tools
+- **Vivado Design Suite:** Synthesis, Implementation, and Bitstream generation.
+- **Vivado Simulator:** Functional verification via testbenches.
+- **Git:** Version control and documentation.
+
+### References
+- **[IEEE Standard 1076-2008](<VHDL Language Reference Manual  https://0x04.net/~mwk/vstd/ieee-1076-2008.pdf>)** 
+- **[Nexys A7 Digilent Reference](<https://digilent.com/reference/programmable-logic/nexys-a7/start>)** 
+- **[Online VHDL Testbench Template Generator](<https://vhdl.lapinoo.net>)**
