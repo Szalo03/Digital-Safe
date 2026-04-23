@@ -54,7 +54,7 @@ This specific testbench verifies the reliability of the button debouncing logic 
 * **Mechanical Bouncing:** Simulates rapid, unstable signal fluctuations (switch noise) to confirm the module effectively filters out the noise and prevents false, multiple triggers.
 ![Debounce Test Bench](Image/debounce_tb.png)
 
-### 🔢 [Counter](<Project/Digital_Safe/Digital_Safe.srcs/sources_1/imports/DE1/Project/Digital Safe/Digital Safe.srcs/sources_1/imports/DE1/Lab_4/Binary_Counter/Binary_Counter.srcs/sources_1/new/counter.vhd>) Testbench 
+### 🔢 [Counter](<Project/Digital_Safe/Digital_Safe.srcs/sources_1/imports/DE1/Lab_4/Binary_Counter/Binary_Counter.srcs/sources_1/new/counter.vhd>) Testbench 
 
 This testbench verifies the navigation logic used to track which digit of the password is currently being edited (slot index 0 to 3). Key test scenarios include:
 
