@@ -45,7 +45,7 @@ A testbench is a crucial simulation environment used to verify the functionality
 * **Logic Verification:** It runs predefined test scenarios to check if the circuit behaves as expected (e.g., verifying the lock states for correct and incorrect password entries).
 * **Deep Debugging:** It allows viewing detailed time waveforms of all internal signals, making it much easier to find and fix logic errors without needing the physical development board.
 
-### ⚙️[Debounce](<Project/Digital_Safe/Digital_Safe.srcs/sources_1/imports/DE1/Project/Digital Safe/Digital Safe.srcs/sources_1/imports/new/debounce.vhd>) ([Testbench])(<TestBenches/debounce_tb>) 
+### ⚙️[Debounce](<Project/Digital_Safe/Digital_Safe.srcs/sources_1/imports/DE1/Project/Digital Safe/Digital Safe.srcs/sources_1/imports/new/debounce.vhd>) ([Testbench](<TestBenches/debounce_tb>)) 
 
 This specific testbench verifies the reliability of the button debouncing logic by simulating real-world mechanical switch behavior. Key test scenarios include:
 
