@@ -33,8 +33,8 @@ Implement a 4-digit code entry system with visual feedback. Store entered codes 
 | **seg** | Output | 7 | 7-Segment Cathodes | Pattern for numbers 0-9 |
 | **an** | Output | 4 | 7-Segment Anodes | Active-low display selectors |
 | **dp** | Output | 1 | Decimal Point | Cursor indicating active digit |
-| **led_g** | Output | 1 | LED16 (Green) | Logic High when safe is OPEN |
-| **led_r** | Output | 1 | LED17 (Red) | Logic High when safe is LOCKED |
+| **led_17g** | Output | 1 | LED16 (Green) | Logic High when safe is OPEN |
+| **led_16r** | Output | 1 | LED17 (Red) | Logic High when safe is LOCKED |
 
 ## 🧪 Testbench & Simulation
 
