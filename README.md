@@ -64,7 +64,7 @@ This testbench verifies the navigation logic used to track which digit of the pa
 * **Wrap-around Logic:** The underlying module design also ensures seamless cyclic navigation (e.g., stepping forward from the last position wraps around to the first).
 ![Counter Test Bench](Image/counter_tb.png)
 
-### 💾 Register Testbench
+### 💾 [Register](<Project/Digital_Safe/Digital_Safe.srcs/sources_1/new/Registr.vhd>) Testbench 
 
 This testbench verifies the 16-bit memory module responsible for storing the assembled 4-digit PIN code. It ensures that data is written exactly to the targeted digit slot without affecting the rest of the code. Key test scenarios include:
 
@@ -73,7 +73,7 @@ This testbench verifies the 16-bit memory module responsible for storing the ass
 * **Data Retention:** Demonstrates that writing to one slot does not overwrite or corrupt data previously stored in other slots (e.g., skipping slot 2 keeps it at `0`, successfully forming the final hex code `1034`).
 ![Registr Test Bench](Image/registr_tb.png)
 
-### ⚖️ Comparator Testbench
+### ⚖️ [Comparator](<Project/Digital_Safe/Digital_Safe.srcs/sources_1/new/Comparator.vhd>) Testbench 
 
 This testbench verifies the core security logic of the digital safe. It ensures that the system continuously and accurately evaluates the user's inputted code against the hardcoded secret password (e.g., `1234`). Key test scenarios include:
 
@@ -83,7 +83,7 @@ This testbench verifies the core security logic of the digital safe. It ensures 
 * **Dynamic Relocking:** Confirms that modifying the code after a successful unlock immediately reverts the system back to a locked state.
 ![Comparator Test Bench](Image/comparator_tb.png)
 
-### 📺 Display Driver Testbench
+### 📺 [Display Driver](<Project/Digital_Safe/Digital_Safe.srcs/sources_1/imports/DE1/Project/Digital Safe/Digital Safe.srcs/sources_1/imports/DE1/Lab_5/display/display.srcs/sources_1/new>) Testbench 
 
 This testbench validates the display multiplexing and data decoding logic for the 4-digit seven-segment display. The simulation environment uses a scaled-down clock divider to rapidly visualize the anode switching process. Key test scenarios include:
 
