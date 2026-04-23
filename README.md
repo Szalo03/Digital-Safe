@@ -92,7 +92,7 @@ This testbench validates the display multiplexing and data decoding logic for th
 * **Edit Position Indicator:** Verifies the decimal point (`dp`) logic, proving that the dot illuminates (goes active-low) exclusively on the digit currently targeted by the `idx_pos` pointer, acting as a visual cursor for the user.
 ![Display_driver Test Bench](Images/Simulation/display_driver_tb.png)
 
-### Implementation Resource Utilization
+## 📊 Implementation Resource Utilization
 | Resource | Utilization | Available | Utilization % |
 | :--- | :--- | :--- | :--- |
 | 🧱 LUT (Look-Up Table) | 49 | 32,600 | 0.15% |
