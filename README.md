@@ -105,8 +105,11 @@ This testbench validates the display multiplexing and data decoding logic for th
 - **Vivado Design Suite:** Synthesis, Implementation, and Bitstream generation.
 - **Vivado Simulator:** Functional verification via testbenches.
 - **Git:** Version control and documentation.
+- **Draw.io:** Schematic design.
+- **vhdl.lapinoo.net:** Online VHDL Testbench Template Generator.
 
 ### References
 - **[IEEE Standard 1076-2008 - VHDL Language Reference Manual](<https://0x04.net/~mwk/vstd/ieee-1076-2008.pdf>)** 
-- **[Nexys A7 Digilent Reference](<https://digilent.com/reference/programmable-logic/nexys-a7/start>)** 
-- **[Online VHDL Testbench Template Generator](<https://vhdl.lapinoo.net>)**
+- **[Nexys A7 Digilent Reference](<https://digilent.com/reference/programmable-logic/nexys-a7/start>)**
+- **[Vhdl examples](<https://github.com/tomas-fryza/vhdl-examples/tree/master>)**
+- **[Constrain file](<https://github.com/Digilent/digilent-xdc/blob/master/Nexys-A7-50T-Master.xdc>)**
