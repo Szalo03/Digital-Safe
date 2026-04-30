@@ -16,6 +16,7 @@ Implement a 4-digit code entry system with visual feedback. Store entered codes 
 * **Immediate Evaluation:** The hardware compares the entered code in memory with the secret password on every clock cycle. The status is indicated by colored LEDs.
 * **Debouncing:** All mechanical button inputs are debounced, ensuring accurate reading of button presses without unwanted multiple registrations.
 
+[![Watch the video](Images/video.mp4)](video)
 
 ## 🗺️ System Schematic ([Digital Safe](<Digital_Safe/Digital_Safe.srcs/sources_1/new/Digital_Safe.vhd>))
 ![Digital Safe Schematic](Images/Schematic.png)
