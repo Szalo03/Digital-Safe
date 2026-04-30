@@ -58,5 +58,6 @@ set_property IOSTANDARD LVCMOS33 [get_ports {an[*]}]
 # RGB LEDs
 # -----------------------------------------------
 set_property -dict { PACKAGE_PIN N15 IOSTANDARD LVCMOS33 } [get_ports {led16_r}];
-
 set_property -dict { PACKAGE_PIN R11 IOSTANDARD LVCMOS33 } [get_ports {led17_g}];
+#cvak
+set_property -dict { PACKAGE_PIN C17   IOSTANDARD LVCMOS33 } [get_ports { lock_open_indicator }];

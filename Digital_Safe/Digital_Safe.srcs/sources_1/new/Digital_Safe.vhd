@@ -7,13 +7,14 @@ entity Digital_Safe is
         btnu     : in  STD_LOGIC;                         
         sw       : in  STD_LOGIC_VECTOR (3 downto 0);     
         btnr     : in  STD_LOGIC;                       
-        btnl     : in  STD_LOGIC;                        
+        btnl     : in  STD_LOGIC;                
         btnd     : in  STD_LOGIC;                         
         seg      : out STD_LOGIC_VECTOR (6 downto 0);     
         an       : out STD_LOGIC_VECTOR (7 downto 0);    
         dp       : out STD_LOGIC;                         
         led17_g  : out STD_LOGIC;                         
-        led16_r  : out STD_LOGIC                          
+        led16_r  : out STD_LOGIC;  
+        lock_open_indicator :  out STD_LOGIC                  
     );
 end Digital_Safe;
 
@@ -69,6 +70,7 @@ architecture Structural of Digital_Safe is
     signal s_slot_idx : std_logic_vector(1 downto 0);
     signal s_full_code : std_logic_vector(15 downto 0);
     signal s_an_4      : std_logic_vector(3 downto 0);
+    signal s_lock_open: std_logic;
 
 begin
 
@@ -103,7 +105,7 @@ begin
         port map (
             clk => clk, rst => btnu,
             code_in => s_full_code,
-            lock_open => led17_g,
+            lock_open => s_lock_open,
             lock_close => led16_r
         );
 
@@ -119,7 +121,9 @@ begin
             dp       => dp
         );
 
-    an(3 downto 0) <= s_an_4; 
+    an(3 downto 0) <= s_an_4;
     an(7 downto 4) <= "1111"; 
+    lock_open_indicator <= not s_lock_open;
+    led17_g <= s_lock_open;
 
 end Structural;
