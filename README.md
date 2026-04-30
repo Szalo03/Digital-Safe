@@ -15,6 +15,7 @@ Implement a 4-digit code entry system with visual feedback. Store entered codes 
 * **Real-Time Display:** The currently assembled code is continuously shown on a seven-segment display, including an indication of the position currently being edited.
 * **Immediate Evaluation:** The hardware compares the entered code in memory with the secret password on every clock cycle. The status is indicated by colored LEDs.
 * **Debouncing:** All mechanical button inputs are debounced, ensuring accurate reading of button presses without unwanted multiple registrations.
+## 📹 Video
 
 https://github.com/user-attachments/assets/128cb411-e62e-44a5-946e-1da3ff676d0d
   
