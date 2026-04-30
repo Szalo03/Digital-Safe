@@ -17,7 +17,7 @@ Implement a 4-digit code entry system with visual feedback. Store entered codes 
 * **Debouncing:** All mechanical button inputs are debounced, ensuring accurate reading of button presses without unwanted multiple registrations.
 
 
-## 🗺️ System Schematic
+## 🗺️ System Schematic ([Digital Safe](<Digital_Safe/Digital_Safe.srcs/sources_1/new/Digital_Safe.vhd>))
 ![Digital Safe Schematic](Images/Schematic.png)
 
 ## 📟 Hardware Interface
