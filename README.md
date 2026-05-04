@@ -1,5 +1,8 @@
 # Digital-Safe - Nexys A7-50T
 
+## 👀 Poster
+![Poster](Images/Digital_Safe_Poster.jpg)
+
 ## 👥 Team members 
 > [Hynek Svoboda](https://github.com/HynekSvoboda), 
 > [Dávid Szalay](https://github.com/Szalo03), 
