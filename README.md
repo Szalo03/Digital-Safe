@@ -1,6 +1,6 @@
 # Digital-Safe - Nexys A7-50T
 
-## 👀 Poster
+## 🎴 Poster
 ![Poster](Images/Digital_Safe_Poster.jpg)
 
 ## 👥 Team members 
